@@ -1,5 +1,175 @@
-// Web Calculator
-// This is a simple web calculator that can be used to perform basic arithmetic operations.
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix Prime Calculator</title>
+    <style>
+        /* تصميم رايق وهادي مريح للعين */
+        body {
+            background-color: #0f172a; /* لون غامق زي الـ VS Code */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
+        .calculator {
+            background-color: #1e293b;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            width: 320px;
+        }
 
+        .brand {
+            color: #38bdf8;
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
 
+        #screen {
+            width: 100%;
+            height: 60px;
+            background-color: #0f172a;
+            border: none;
+            border-radius: 8px;
+            color: #f8fafc;
+            font-size: 24px;
+            text-align: right;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        button {
+            padding: 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .number {
+            background-color: #334155;
+            color: #f8fafc;
+        }
+
+        .number:hover {
+            background-color: #475569;
+        }
+
+        .operator {
+            background-color: #0284c7;
+            color: #f8fafc;
+        }
+
+        .operator:hover {
+            background-color: #0369a1;
+        }
+
+        .clear {
+            background-color: #ef4444;
+            color: #f8fafc;
+            grid-column: span 2;
+        }
+
+        .clear:hover {
+            background-color: #dc2626;
+        }
+
+        .equal {
+            background-color: #22c55e;
+            color: #f8fafc;
+            grid-column: span 2;
+        }
+
+        .equal:hover {
+            background-color: #16a34a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="brand">PhoenixPrime ℗</div>
+    
+    <input type="text" id="screen" readonly>
+    
+    <div class="buttons">
+        <button class="clear" onclick="clearScreen()">C</button>
+        <button class="operator" onclick="appendOperator('/')">/</button>
+        <button class="operator" onclick="appendOperator('*')">*</button>
+        
+        <button class="number" onclick="appendNumber('7')">7</button>
+        <button class="number" onclick="appendNumber('8')">8</button>
+        <button class="number" onclick="appendNumber('9')">9</button>
+        <button class="operator" onclick="appendOperator('-')">-</button>
+        
+        <button class="number" onclick="appendNumber('4')">4</button>
+        <button class="number" onclick="appendNumber('5')">5</button>
+        <button class="number" onclick="appendNumber('6')">6</button>
+        <button class="operator" onclick="appendOperator('+')">+</button>
+        
+        <button class="number" onclick="appendNumber('1')">1</button>
+        <button class="number" onclick="appendNumber('2')">2</button>
+        <button class="number" onclick="appendNumber('3')">3</button>
+        <button class="equal" onclick="calculate()">=</button>
+        
+        <button class="number" style="grid-column: span 2;" onclick="appendNumber('0')">0</button>
+        <button class="number" onclick="appendNumber('.')">.</button>
+    </div>
+</div>
+
+<script>
+    // اللوجيك بتاع الحسبة اللي عقلك الباطن بقى فاهمه خلاص
+    let screen = document.getElementById('screen');
+
+    function appendNumber(num) {
+        screen.value += num;
+    }
+
+    function appendOperator(op) {
+        screen.value += " " + op + " ";
+    }
+
+    function clearScreen() {
+        screen.value = '';
+    }
+
+    function calculate() {
+        try {
+            // eval بتعمل الحسبة أوتوماتيك بناء على اللوجيك الرياضي
+            let result = eval(screen.value);
+            
+            // حماية ضد القسمة على صفر في الويب
+            if (result === Infinity || isNaN(result)) {
+                screen.value = "Error";
+            } else {
+                screen.value = result;
+            }
+        } catch (error) {
+            screen.value = "Error";
+        }
+    }
+</script>
+
+</body>
+</html>
